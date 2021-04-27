@@ -31,6 +31,7 @@ conan_cmake_run(
 # xml - для использования в Sphinx, html - для конечного пользователя
 # путь к документации: build/html
 set(DOXYGEN_GENERATE_XML YES)
+set(DOXYGEN_HTML_EXTRA_STYLESHEET doxygen-awesome.css)
 find_package(Doxygen)
 doxygen_add_docs(Doxygen src)
 
