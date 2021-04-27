@@ -27,8 +27,17 @@ conan_cmake_run(
   ENV CONAN_CMAKE_PROGRAM="${CMAKE_COMMAND}" ${ENV}
   )
 
+set(DOXYGEN_GENERATE_XML YES)
 find_package(Doxygen)
 doxygen_add_docs(doc src)
+
+add_custom_target(Sphinx ALL
+                  COMMAND
+                  sphinx-build -b html
+                  ${CMAKE_CURRENT_LIST_DIR}/docs ${CMAKE_CURRENT_BINARY_DIR}/docs
+                  -Dbreathe_projects.Homework=${CMAKE_CURRENT_BINARY_DIR}/xml
+                  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                  COMMENT "Generating documentation with Sphinx")
 
 enable_testing()
 add_subdirectory(external/doctest)
