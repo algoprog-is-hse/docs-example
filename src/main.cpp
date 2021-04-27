@@ -6,9 +6,22 @@
 #include <ostream>
 #include <set>
 
+/// 2d Rectangle class
+/**
+ * simple struct with output operator
+ */
 struct rect2d { // объявлен в другой библиотеке
-    float x, y, width, height;
+    float x;    ///< horizontal coordinate
+
+    /// vertical coodinate
+    float y, width, height;
     // hidden friend
+    /**
+     * Output operator
+     * \param s stream to output to
+     * \param r rectangle to print
+     * \return argument s after modifitions
+     */
     friend auto operator<<(std::ostream &s, rect2d const &r) noexcept
         -> std::ostream & {
         return s << fmt::format("rect2d({},{},{},{})", r.x, r.y, r.width,
@@ -79,6 +92,10 @@ struct Square : Rectangle, Diamond {
     auto circumference() const -> float override { return float(4 * side); }
 };
 
+/// Calls method draw of a Shape object
+/**
+ * \param shape to call draw on
+ */
 void call_draw(Shape const &shape) { shape.draw(); }
 
 void call_draw_and_delete(std::unique_ptr<Shape> shape) { shape->draw(); }

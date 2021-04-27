@@ -27,6 +27,9 @@ conan_cmake_run(
   ENV CONAN_CMAKE_PROGRAM="${CMAKE_COMMAND}" ${ENV}
   )
 
+find_package(Doxygen)
+doxygen_add_docs(doc src)
+
 enable_testing()
 add_subdirectory(external/doctest)
 include(external/doctest/doctest.cmake)
