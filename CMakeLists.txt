@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.0)
 
-project(Homework CXX)
+project(Homework C CXX)
 set(CMAKE_CXX_STANDARD 17) # CMAKE_CXX_STANDARD = 17
 include(cmake/StandardProjectSettings.cmake)
 # Link this 'library' to set the c++ standard / compile-time options requested
@@ -27,16 +27,21 @@ conan_cmake_run(
   ENV CONAN_CMAKE_PROGRAM="${CMAKE_COMMAND}" ${ENV}
   )
 
+# Создавать докуменатцию с помощью Doxygen в форматах xml и html
+# xml - для использования в Sphinx, html - для конечного пользователя
+# путь к документации: build/html
 set(DOXYGEN_GENERATE_XML YES)
 find_package(Doxygen)
-doxygen_add_docs(doc src)
+doxygen_add_docs(Doxygen src)
 
+# Создавать документацию с помощью sphinx
+# путь к документации: build/docs
 add_custom_target(Sphinx ALL
                   COMMAND
                   sphinx-build -b html
                   ${CMAKE_CURRENT_LIST_DIR}/docs ${CMAKE_CURRENT_BINARY_DIR}/docs
-                  -Dbreathe_projects.Homework=${CMAKE_CURRENT_BINARY_DIR}/xml
-                  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                  -Dbreathe_projects.Example=${CMAKE_CURRENT_BINARY_DIR}/xml
+                  DEPENDS Doxygen
                   COMMENT "Generating documentation with Sphinx")
 
 enable_testing()
