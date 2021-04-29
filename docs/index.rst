@@ -13,5 +13,11 @@ Welcome to C++ Inheritance Example's documentation!
 .. doxygenstruct:: rect2d
    :members:
 
+Смотри :cpp:class:`point2d`
+
 Indices and tables
 ==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

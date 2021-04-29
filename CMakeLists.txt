@@ -22,28 +22,36 @@ foreach(language ${languages})
   endif()
 endforeach()
 conan_cmake_run(
-  CONANFILE conanfile.txt
-  BASIC_SETUP CMAKE_TARGETS BUILD missing
-  ENV CONAN_CMAKE_PROGRAM="${CMAKE_COMMAND}" ${ENV}
-  )
+  CONANFILE
+  conanfile.txt
+  BASIC_SETUP
+  CMAKE_TARGETS
+  BUILD
+  missing
+  ENV
+  CONAN_CMAKE_PROGRAM="${CMAKE_COMMAND}"
+  ${ENV})
 
-# Создавать докуменатцию с помощью Doxygen в форматах xml и html
-# xml - для использования в Sphinx, html - для конечного пользователя
-# путь к документации: build/html
+# Создавать докуменатцию с помощью Doxygen в форматах xml и html xml - для
+# использования в Sphinx, html - для конечного пользователя путь к документации:
+# build/html
 set(DOXYGEN_GENERATE_XML YES)
+set(DOXYGEN_GENERATE_TREEVIEW YES)
+set(DOXYGEN_SOURCE_BROWSER YES)
+set(DOXYGEN_INLINE_SOURCES YES)
 set(DOXYGEN_HTML_EXTRA_STYLESHEET doxygen-awesome.css)
 find_package(Doxygen)
 doxygen_add_docs(Doxygen src)
 
-# Создавать документацию с помощью sphinx
-# путь к документации: build/docs
-add_custom_target(Sphinx ALL
-                  COMMAND
-                  sphinx-build -b html
-                  ${CMAKE_CURRENT_LIST_DIR}/docs ${CMAKE_CURRENT_BINARY_DIR}/docs
-                  -Dbreathe_projects.Example=${CMAKE_CURRENT_BINARY_DIR}/xml
-                  DEPENDS Doxygen
-                  COMMENT "Generating documentation with Sphinx")
+# Создавать документацию с помощью sphinx путь к документации: build/docs
+add_custom_target(
+  Sphinx ALL
+  COMMAND
+    sphinx-build -b html ${CMAKE_CURRENT_LIST_DIR}/docs
+    ${CMAKE_CURRENT_BINARY_DIR}/docs
+    -Dbreathe_projects.Example=${CMAKE_CURRENT_BINARY_DIR}/xml
+  DEPENDS Doxygen
+  COMMENT "Generating documentation with Sphinx")
 
 enable_testing()
 add_subdirectory(external/doctest)
