@@ -37,4 +37,5 @@ jobs:
       - name: Github Pages
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
-          target-folder: ${{ env.buildDir }}/docs
+          folder: ${{ env.buildDir }}/docs
+          branch: gh-pages
